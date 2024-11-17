@@ -1,58 +1,47 @@
-/* style.css */
 body {
   font-family: Arial, sans-serif;
-  background-color: #4B0082; /* Dark Purple */
-  color: white;
+  background-color: #f4f4f9;
   margin: 0;
   padding: 20px;
 }
 
 .container {
-  max-width: 600px;
+  width: 80%;
   margin: 0 auto;
   background-color: white;
-  color: #4B0082; /* Dark Purple */
   padding: 20px;
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   text-align: center;
+  color: #333;
 }
 
 .question {
-  margin-bottom: 20px;
+  margin: 20px 0; /* Aumenta el espacio entre las preguntas */
 }
 
 .question label {
-  font-size: 16px;
   font-weight: bold;
+  display: block;
+  margin-bottom: 10px; /* Espacio debajo de la pregunta */
 }
 
 .answers {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacio entre las opciones de respuestas */
   margin-top: 10px;
 }
 
 .answers input {
-  margin-right: 10px;
+  margin: 0 15px; /* Aumenta el espacio entre los botones de opción */
+  margin-bottom: 15px; /* Añadir margen inferior a las respuestas */
 }
 
 .button-container {
   text-align: center;
   margin-top: 20px;
-}
-
-button {
-  background-color: #4B0082; /* Dark Purple */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #3a006e;
 }
