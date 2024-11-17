@@ -19,7 +19,7 @@ h1 {
 }
 
 .question {
-  margin: 30px 0; /* Aumenta el espacio entre las preguntas */
+  margin: 60px 0; /* Aumenta el espacio entre las preguntas (dos líneas de espacio) */
 }
 
 .question label {
@@ -32,7 +32,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 15px; /* Espacio entre las opciones de respuestas */
+  gap: 30px; /* Aumenta el espacio entre las opciones de respuestas (dos caracteres en blanco) */
   margin-top: 10px;
 }
 
