@@ -19,25 +19,25 @@ h1 {
 }
 
 .question {
-  margin: 20px 0; /* Aumenta el espacio entre las preguntas */
+  margin: 30px 0; /* Aumenta el espacio entre las preguntas */
 }
 
 .question label {
   font-weight: bold;
   display: block;
-  margin-bottom: 10px; /* Espacio debajo de la pregunta */
+  margin-bottom: 5px; /* Espacio debajo de la pregunta */
 }
 
 .answers {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px; /* Espacio entre las opciones de respuestas */
+  gap: 15px; /* Espacio entre las opciones de respuestas */
   margin-top: 10px;
 }
 
 .answers input {
-  margin: 0 15px; /* Aumenta el espacio entre los botones de opción */
+  margin: 0 5px; /* Aumenta el espacio entre los botones de opción */
   margin-bottom: 15px; /* Añadir margen inferior a las respuestas */
 }
 
