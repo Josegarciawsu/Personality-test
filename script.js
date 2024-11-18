@@ -1,32 +1,31 @@
 const questions = [
-  "I am excited by learning new things and exploring different ideas.", // Openness
-  "I actively seek to improve my creativity and try new ways to approach challenges.", // Openness
-  "I prefer to plan my activities and tasks well in advance.", // Conscientiousness
-  "I always follow through with my commitments, even when they require extra effort.", // Conscientiousness
-  "I feel comfortable socializing with unfamiliar people.", // Extraversion
-  "I enjoy taking charge and leading group discussions or activities.", // Extraversion
-  "I am willing to help others without expecting anything in return.", // Agreeableness
-  "I avoid conflict in order to keep the peace, even when I have valid points to share.", // Agreeableness
-  "I often worry about potential negative outcomes or things going wrong.", // Neuroticism
-  "I remain calm and composed even in stressful or challenging situations." // Neuroticism (inverse)
+  { text: "I enjoy exploring new ideas and experiences.", trait: "Openness" },
+  { text: "I like to think creatively and challenge conventional ideas.", trait: "Openness" },
+  { text: "I plan ahead and organize my tasks efficiently.", trait: "Conscientiousness" },
+  { text: "I take pride in completing tasks thoroughly and on time.", trait: "Conscientiousness" },
+  { text: "I feel energized when I am with other people.", trait: "Extraversion" },
+  { text: "I enjoy being the center of attention in social settings.", trait: "Extraversion" },
+  { text: "I empathize with others and value their perspectives.", trait: "Agreeableness" },
+  { text: "I strive to maintain harmony and avoid conflict in relationships.", trait: "Agreeableness" },
+  { text: "I often worry about things that could go wrong.", trait: "Neuroticism" },
+  { text: "I feel stressed easily and take a while to calm down.", trait: "Neuroticism" }
 ];
 
 const options = ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"];
+const form = document.getElementById("personalityTest");
+const questionsContainer = document.getElementById("questions");
 
-const form = document.getElementById('personalityTest');
-const questionsContainer = document.getElementById('questions');
-
-// Dynamically generate questions
-questions.forEach((question, index) => {
-  const questionDiv = document.createElement('div');
-  questionDiv.classList.add('question');
+// Generate questions dynamically
+questions.forEach((q, index) => {
+  const questionDiv = document.createElement("div");
+  questionDiv.classList.add("question");
   questionDiv.innerHTML = `
-    <label>${index + 1}. ${question}</label>
+    <label>${index + 1}. ${q.text}</label>
     <div class="answers">
       ${options
         .map(
           (option, i) =>
-            `<label><input type="radio" name="q${index}" value="${i}">${option}</label>`
+            `<label><input type="radio" name="q${index}" value="${4 - i}">${option}</label>`
         )
         .join("")}
     </div>
@@ -36,29 +35,33 @@ questions.forEach((question, index) => {
 });
 
 // Handle form submission
-form.addEventListener('submit', function (event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const traits = [0, 0, 0, 0, 0]; // Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism
+  const scores = { Openness: 0, Conscientiousness: 0, Extraversion: 0, Agreeableness: 0, Neuroticism: 0 };
 
-  questions.forEach((_, index) => {
+  questions.forEach((q, index) => {
     const selected = document.querySelector(`input[name="q${index}"]:checked`);
     if (selected) {
-      const value = parseInt(selected.value);
-      const traitIndex = Math.floor(index / 2); // Map question pairs to traits
-      traits[traitIndex] += value;
+      scores[q.trait] += parseInt(selected.value);
     }
   });
 
-  const maxIndex = traits.indexOf(Math.min(...traits));
-  const personalityTypes = [
-    "Openness: Curious, imaginative, and open to new ideas.",
-    "Conscientiousness: Organized, reliable, and goal-oriented.",
-    "Extraversion: Outgoing, energetic, and sociable.",
-    "Agreeableness: Kind, compassionate, and cooperative.",
-    "Neuroticism: Sensitive to stress, with frequent mood swings."
-  ];
+  // Determine the dominant personality type
+  const dominantTrait = Object.keys(scores).reduce((a, b) => (scores[a] > scores[b] ? a : b));
 
-  document.getElementById('result').style.display = 'block';
-  document.getElementById('personalityResult').textContent = `Your personality type is: ${personalityTypes[maxIndex]}`;
+  const personalityDefinitions = {
+    Openness: "Curious, imaginative, and open to new experiences.",
+    Conscientiousness: "Organized, reliable, and goal-oriented.",
+    Extraversion: "Outgoing, energetic, and social.",
+    Agreeableness: "Kind, compassionate, and cooperative.",
+    Neuroticism: "Sensitive to stress, with frequent mood swings."
+  };
+
+  const resultElement = document.getElementById("result");
+  resultElement.style.display = "block";
+  document.getElementById("personalityResult").textContent = `Your personality type is: ${dominantTrait} - ${personalityDefinitions[dominantTrait]}`;
+
+  // Scroll smoothly to the result section
+  resultElement.scrollIntoView({ behavior: "smooth" });
 });
