@@ -1,47 +1,43 @@
 body {
+  background-color: purple;
+  color: white;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
+  text-align: center;
   padding: 20px;
 }
 
-.container {
-  width: 80%;
+#personalityTest {
+  max-width: 600px;
   margin: 0 auto;
-  background-color: white;
+  border: 2px solid white;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #4b0082;
 }
 
 h1 {
-  text-align: center;
-  color: #333;
+  margin-bottom: 20px;
 }
 
 .question {
-  margin: 60px 0; /* Aumenta el espacio entre las preguntas (dos líneas de espacio) */
+  margin-bottom: 15px;
 }
 
-.question label {
-  font-weight: bold;
+.answers label {
   display: block;
-  margin-bottom: 5px; /* Espacio debajo de la pregunta */
+  margin: 5px 0;
 }
 
-.answers {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px; /* Aumenta el espacio entre las opciones de respuestas (dos caracteres en blanco) */
-  margin-top: 10px;
+hr {
+  border: 0;
+  height: 1px;
+  background: white;
+  margin: 15px 0;
 }
 
-.answers input {
-  margin: 0 5px; /* Aumenta el espacio entre los botones de opción */
-  margin-bottom: 15px; /* Añadir margen inferior a las respuestas */
-}
-
-.button-container {
-  text-align: center;
+#result {
+  display: none;
   margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
 }
