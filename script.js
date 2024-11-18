@@ -1,15 +1,14 @@
-// script.js
 const questions = [
-  "I am excited by learning new things and exploring different ideas.",
-  "I actively seek to improve my creativity and try new ways to approach challenges.",
-  "I prefer to plan my activities and tasks well in advance.",
-  "I always follow through with my commitments, even when they require extra effort.",
-  "I feel comfortable socializing with unfamiliar people.",
-  "I enjoy taking charge and leading group discussions or activities.",
-  "I am willing to help others without expecting anything in return.",
-  "I avoid conflict in order to keep the peace, even when I have valid points to share.",
-  "I often worry about potential negative outcomes or things going wrong.",
-  "I remain calm and composed even in stressful or challenging situations."
+  "I am excited by learning new things and exploring different ideas.", // Openness
+  "I actively seek to improve my creativity and try new ways to approach challenges.", // Openness
+  "I prefer to plan my activities and tasks well in advance.", // Conscientiousness
+  "I always follow through with my commitments, even when they require extra effort.", // Conscientiousness
+  "I feel comfortable socializing with unfamiliar people.", // Extraversion
+  "I enjoy taking charge and leading group discussions or activities.", // Extraversion
+  "I am willing to help others without expecting anything in return.", // Agreeableness
+  "I avoid conflict in order to keep the peace, even when I have valid points to share.", // Agreeableness
+  "I often worry about potential negative outcomes or things going wrong.", // Neuroticism
+  "I remain calm and composed even in stressful or challenging situations." // Neuroticism (inverse)
 ];
 
 const options = ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"];
@@ -17,63 +16,49 @@ const options = ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Dis
 const form = document.getElementById('personalityTest');
 const questionsContainer = document.getElementById('questions');
 
-// Generate questions dynamically
+// Dynamically generate questions
 questions.forEach((question, index) => {
   const questionDiv = document.createElement('div');
   questionDiv.classList.add('question');
-  
-  const label = document.createElement('label');
-  label.textContent = `${index + 1}. ${question}`;
-  
-  const answersDiv = document.createElement('div');
-  answersDiv.classList.add('answers');
-
-  options.forEach(option => {
-    const input = document.createElement('input');
-    input.type = 'radio';
-    input.name = `q${index}`;
-    input.value = option;
-
-    const labelOption = document.createElement('label');
-    labelOption.textContent = option;
-
-    answersDiv.appendChild(input);
-    answersDiv.appendChild(labelOption);
-  });
-
-  questionDiv.appendChild(label);
-  questionDiv.appendChild(answersDiv);
+  questionDiv.innerHTML = `
+    <label>${index + 1}. ${question}</label>
+    <div class="answers">
+      ${options
+        .map(
+          (option, i) =>
+            `<label><input type="radio" name="q${index}" value="${i}">${option}</label>`
+        )
+        .join("")}
+    </div>
+    <hr>
+  `;
   questionsContainer.appendChild(questionDiv);
 });
 
-// Handle form submission and calculate personality type
-form.addEventListener('submit', function(event) {
+// Handle form submission
+form.addEventListener('submit', function (event) {
   event.preventDefault();
-  
-  let score = 0;
+
+  const traits = [0, 0, 0, 0, 0]; // Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism
 
   questions.forEach((_, index) => {
-    const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
-    if (selectedAnswer) {
-      const value = selectedAnswer.value;
-      // Increment score based on answer
-      score += options.indexOf(value); // 0 = Strongly Agree, 4 = Strongly Disagree
+    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+    if (selected) {
+      const value = parseInt(selected.value);
+      const traitIndex = Math.floor(index / 2); // Map question pairs to traits
+      traits[traitIndex] += value;
     }
   });
 
-  // Classify personality based on score
-  let personality = '';
-  if (score <= 10) {
-    personality = 'You might be an introvert, calm and analytical.';
-  } else if (score <= 20) {
-    personality = 'You seem to be a balanced individual, open to new ideas.';
-  } else if (score <= 30) {
-    personality = 'You appear to be an extrovert, enthusiastic and social.';
-  } else {
-    personality = 'You might be highly ambitious and driven, seeking leadership roles.';
-  }
+  const maxIndex = traits.indexOf(Math.min(...traits));
+  const personalityTypes = [
+    "Openness: Curious, imaginative, and open to new ideas.",
+    "Conscientiousness: Organized, reliable, and goal-oriented.",
+    "Extraversion: Outgoing, energetic, and sociable.",
+    "Agreeableness: Kind, compassionate, and cooperative.",
+    "Neuroticism: Sensitive to stress, with frequent mood swings."
+  ];
 
-  // Show result
   document.getElementById('result').style.display = 'block';
-  document.getElementById('personalityResult').textContent = personality;
+  document.getElementById('personalityResult').textContent = `Your personality type is: ${personalityTypes[maxIndex]}`;
 });
