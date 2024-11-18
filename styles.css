@@ -35,6 +35,21 @@ hr {
   margin: 15px 0;
 }
 
+button {
+  background-color: white;
+  color: purple;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ffccff;
+}
+
 #result {
   display: none;
   margin-top: 20px;
